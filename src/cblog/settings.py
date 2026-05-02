@@ -152,60 +152,32 @@ USE_TZ = True
 
 
 
-#STATIC_URL = '/static/'
-#MEDIA_URL = '/media/'
-#STATICFILES_DIRS = [BASE_DIR / "static"]
-
-#MEDIA_ROOT = BASE_DIR / "media_root"
-
-#CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
-#CRISPY_TEMPLATE_PACK = "bootstrap4"
-#DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
-#LOGIN_REDIRECT_URL = "blog:list"
-
-#LOGIN_URL = "login"
-
-
-#AWS_STORAGE_BUCKET_NAME = 'capstone-aydin-blog' # please enter your s3 bucket name
-#AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-#AWS_S3_REGION_NAME = "us-east-1" # please enter your s3 region 
-#AWS_DEFAULT_ACL = 'public-read'
-
-#AWS_LOCATION = 'static'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR, 'static'),
-#]
-
-#STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-#DEFAULT_FILE_STORAGE = 'cblog.storages.MediaStore'
-
-
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+MEDIA_ROOT = BASE_DIR / "media_root"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LOGIN_REDIRECT_URL = "blog:list"
+
 LOGIN_URL = "login"
 
-# S3 settings - şimdilik kapalı
-# AWS_STORAGE_BUCKET_NAME = 'capstone-aydin-blog'
-# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-# AWS_S3_REGION_NAME = "us-east-1"
-# AWS_DEFAULT_ACL = 'public-read'
-# AWS_LOCATION = 'static'
-# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# DEFAULT_FILE_STORAGE = 'cblog.storages.MediaStore'
+
+AWS_STORAGE_BUCKET_NAME = 'capstone-aydin-blog' # please enter your s3 bucket name
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_REGION_NAME = "us-east-1" # please enter your s3 region 
+AWS_DEFAULT_ACL = 'public-read'
+
+AWS_LOCATION = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'cblog.storages.MediaStore'
