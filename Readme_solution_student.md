@@ -33,10 +33,10 @@ The Clarusway Blog Page Application aims to deploy blog application as a web app
     ## Route Table
     - Go to route tables on left hand side. We have already one route table as main route table. Change it's name as `aws_capstone-public-RT`
     - Create a route table and give a name as `aws_capstone-private-RT`.
-    - Add a rule to `aws_capstone-public-RT` in which destination 0.0.0.0/0 (any network, any host) to target the internet gateway `aws_capstone-IGW` in order to allow access to the internet.
+    - Add a rule to `aws_capstone-public-RT` in which destination 0.0.0.0/0 (any network, any host) to target the internet gateway `aws_capstone-IGW` in order to allow access to the internet. (bu public route table'ın internete açılabilmesi için internet gateway'i ekleriz.)
     - Select the private route table, come to the subnet association subsection and add private subnets to this route table. Similarly, we will do it for public route table and public subnets.
 
-    ## Endpoint
+    ## Endpoint (private route table internete açılmıcak, private olduğu için kullanacağımz s3 servisler ile görüşebilmesi için endpoint bağlarız.)
     - Go to the endpoint section on the left hand menu
     - select endpoint
     - click create endpoint, name it "aws-capstone-endpoint"
