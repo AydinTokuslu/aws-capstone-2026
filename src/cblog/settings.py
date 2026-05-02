@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # third party
     'crispy_forms',
+    'crispy_bootstrap4',
     'storages'
 ]
 
@@ -155,7 +156,9 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_ROOT = BASE_DIR / "media_root"
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LOGIN_REDIRECT_URL = "blog:list"
 
