@@ -19,14 +19,13 @@ git clone https://$TOKEN@github.com/AydinTokuslu/aws-capstone-2026.git
 #cd /home/ubuntu/<YOUR PRIVATE REPO NAME>
 cd /home/ubuntu/aws-capstone-2026
 apt-get install -y python3 python3-pip python3-venv python3-dev default-libmysqlclient-dev build-essential pkg-config
-
+pip install -r requirements.txt
 cd /home/ubuntu/aws-capstone-2026/src
 
 python3 -m venv /opt/capstone-venv
 source /opt/capstone-venv/bin/activate
 
 pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
 
 python manage.py collectstatic --noinput
 # python manage.py makemigrations
