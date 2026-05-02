@@ -135,7 +135,8 @@ Go to the S3 Consol and lets create two buckets.
 - Click Create Bucket
 
 ```text
-Bucket Name : awscapstones<name>blog
+#Bucket Name : awscapstones<name>blog
+Bucket Name : capstone-aydin-blog
 Region      : N.Virginia
 Object Ownership
     - ACLs enabled
@@ -254,11 +255,11 @@ sistemde nat-instance çıkmıyor, aws sıcak bakmıyor.onun yerine cli ile nat-
 !!!!!!!security-group-ids ile subnet-id değişecek!!!!!! 
 
 örnek cli komutu:
-aws ec2 run-instances --image-id ami-0aa210fd2121a98b7 --instance-type t2.micro --key-name mykey --security-group-ids sg-0e26dc8f3589cef3e --subnet-id subnet-0bf512f4c337e301c
+aws ec2 run-instances --image-id ami-0aa210fd2121a98b7 --instance-type t2.micro --key-name mykey --security-group-ids sg-0d77d6e944440f630 --subnet-id subnet-081c62735308366fe
 
 
 sonra üzerinde değişiklik yapıcaz.
-nat-instance olarak başkalarının paketlerini taşıyacağı için kendi paket taşımasını durdururuz.  yani paketin adresi sen misin değilmisin bunları kontrol etmeyi bırak, gelen paketi hedefe taşı, ne geliyorsa gönder gitsin.
+nat-instance olarak başkalarının paketlerini taşıyacağı için kendi paket taşımasını durdururuz.  yani paketin adresi sen misin değilmisin bunları kontrol etmeyi bırak, gelen paketi hedefe taşı, ne geliyorsa gönder gitsin, trafiği durdurma.
 instance ===> actions ===> Networking ===> Change Source / destination check ===> Stop'u tikleriz.
 
 ######################################
@@ -268,7 +269,8 @@ instance ===> actions ===> Networking ===> Change Source / destination check ===
 
 - select newly created NAT instance and enable stop source/destination check
 - go to private route table and write a rule
-
+# bunun amacı, private instance'lar private route üzerinden internete çıkacaksa nat-instance üzerinden çık, bunu kullan, adresini gizleyerek bunun üzerinden çık
+# içeride servislere ulaşacaksan s3 endpoint'i (pl-63a5400) kullan, içeride dolaşacaksan local route kullan.
 ```
 Destination : 0.0.0.0/0
 Target      : instance ---> Select NAT Instance
@@ -283,9 +285,10 @@ ssh -A ec2-user@<Public IP or DNS name of NAT instance> (your local)
 ssh ubuntu@<Private IP of test web server>  (in NAT instance)
 ssh ec2-user@<Private IP of test web server>  (in NAT instance)
 You are in the private EC2 instance
-curl www.google.com yapıp içerik gelip gelmediğini görürüz
+type curl www.google.com yapıp içerik gelip gelmediğini görürüz
 -->
 
+# Test1
 <!-- 1nci test (bir tane deneme linux ec2 ile nat-instance'a ulaşıp ulaşamadığımızı görmek için test ederiz. Bunun için bir linux instance ayağa kaldırılır, capstone-vpc ve private 1a subnet seçilir.
 security group için  rds hariç hepsini seçeriz.
 - capstone_EC2_Sec_Group
@@ -295,10 +298,21 @@ security group için  rds hariç hepsini seçeriz.
 eval $(ssh-agent) ile nat-instance üzerinden deneme instance'a bağlanırız ve private subnete bağlandığımızı görürüz.
 private instance içinde curl www.google.com yapıp, içerik gelip gelmediğini görürüz. geliyırsa çalışıyordur.
 
+eval $(ssh-agent) (cd .ssh your local)
+ssh-add xxxxxxxxxx.pem   (your local )
+ssh -A ec2-user@<Public IP or DNS name of NAT instance> (your local)
+ssh ubuntu@<Private IP of test web server- deneme için ayağa kaldırdığımız instance Private IP>  (in NAT instance)
+ssh ec2-user@<Private IP of test web server - deneme için ayağa kaldırdığımız instance Private IP>  (in NAT instance)
+You are in the private EC2 instance
+type curl www.google.com yapıp içerik gelip gelmediğini görürüz
 
--- 2nci test olarak bir public ubuntu instance ayağa kaldırırız ki diğer servislere bağlanıp bağlanamadığımızı görürürüz. 
+-->
+
+# Test2
+<!--
+-- 2nci test olarak bir public ubuntu instance ayağa kaldırırız ki diğer servislere bağlanıp bağlanamadığımızı görürürüz, userdata'nın çalışıp çalışmadığını görmek için. 
 private ile boş yere vakit kaybedip nat-instance ile bağlanmamak için, direkt public subnet üzerinde deneme instance ayağa kaldırılır.
-userdatayı test etmek için: 
+userdatayı test etmek için yapıyoruz bu testi, eğer public subnette çalışıyorsa private subnette de çalışır: 
 deneme bir ubuntu instance ayağa kaldırırız, capstone vpc ve 1a public subnet seçilir. buna role s3-ssm rolü atanır ve userdata eklenmeden ayağa kaldırılır.
 bu instance'a direkt connect ile bağlanırız.
 instance'a bağlanınca sudo su yazıp userdata'nın diğer komutları (342-365) sırayla çalıştırırız.
@@ -306,6 +320,9 @@ sonra hepsi bitince public ip'yi konsolda çalıştırır ve blog sayfasını g�
 blog sayfasında kayıt olur ve sonra jpg'li post yapıştırırız.
 tüm eklemeleri s3 bucket içinde de görürüz.
 sistem çalıştıysa o zaman launch template oluştururuz.
+
+kullanılacak userdata yandaki dosyada!!!!!!
+instance'a bağlanırız ve userdatayı girmeden önce hemen yetkiyi almak için sudo su ile başlarız, sonra user data'daki komutları tek tek gireriz.
 -->
 
 
@@ -316,7 +333,7 @@ Go to the IAM role console click role on the right hand menu than create role
 
 ```text
 trusted entity  : EC2 as  ---> click Next:Permission
-Policy          : AmazonS3FullAccess policy
+Policy          : AmazonS3FullAccess policy, AmazonSSMFullAccess policy(SSM Parametrelere erişsin diye)
 Tags            : No tags
 Role Name       : aws_capstone_EC2_S3_Full_Access
 Description     : For EC2, S3 Full Access Role
