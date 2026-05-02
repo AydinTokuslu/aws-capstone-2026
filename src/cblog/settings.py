@@ -173,7 +173,7 @@ AWS_S3_REGION_NAME = "us-east-1" # please enter your s3 region
 AWS_DEFAULT_ACL = 'public-read'
 
 AWS_LOCATION = 'static'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
