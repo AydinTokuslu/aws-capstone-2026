@@ -194,22 +194,28 @@ Please
 apt-get update -y
 apt-get upgrade -y
 apt-get install git -y
-apt-get install python3 -y
-apt install python3-pip -y
+apt-get install -y python3 python3-pip python3-venv python3-dev
+python3 -m venv /opt/appenv
+source /opt/appenv/bin/activate
+pip install --upgrade pip
 pip3 install boto3
 apt install awscli -y
 cd /home/ubuntu/
-TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-git clone https://$TOKEN@<YOUR PRIVATE REPO URL>
-cd /home/ubuntu/<YOUR PRIVATE REPO NAME>
-apt install python3-pip -y
-apt-get install python3.7-dev default-libmysqlclient-dev -y
-pip3 install -r requirements.txt
-cd /home/ubuntu/<YOUR PRIVATE REPO NAME>/src
-python3 manage.py collectstatic --noinput
-python3 manage.py makemigrations
-python3 manage.py migrate
-python3 manage.py runserver 0.0.0.0:80
+TOKEN=$(aws --region=us-east-1 ssm get-parameter --name /aydin/capstone/token --with-decryption --query 'Parameter.Value' --output text)
+git clone https://$TOKEN@github.com/AydinTokuslu/aws-capstone-2026.git
+cd /home/ubuntu/aws-capstone-2026
+apt-get install -y python3 python3-pip python3-venv python3-dev default-libmysqlclient-dev build-essential pkg-config
+pip install -r requirements.txt
+cd /home/ubuntu/aws-capstone-2026/src
+python3 -m venv /opt/capstone-venv
+source /opt/capstone-venv/bin/activate
+pip install crispy-bootstrap4
+pip install --upgrade pip setuptools wheel
+python manage.py collectstatic --noinput
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver 0.0.0.0:80
+
 ```
 
 ## Step 8: Write RDS database endpoint and S3 Bucket name in settings file given by Clarusway Fullstack Developer team and push your application into your own public repo on Github
@@ -315,14 +321,45 @@ private ile boş yere vakit kaybedip nat-instance ile bağlanmamak için, direkt
 userdatayı test etmek için yapıyoruz bu testi, eğer public subnette çalışıyorsa private subnette de çalışır: 
 deneme bir ubuntu instance ayağa kaldırırız, capstone vpc ve 1a public subnet seçilir. buna role s3-ssm rolü atanır ve userdata eklenmeden ayağa kaldırılır.
 bu instance'a direkt connect ile bağlanırız.
-instance'a bağlanınca sudo su yazıp userdata'nın diğer komutları (342-365) sırayla çalıştırırız.
+instance'a bağlanınca sudo su yazıp userdata'nın diğer komutları (397-423) sırayla çalıştırırız.
 sonra hepsi bitince public ip'yi konsolda çalıştırır ve blog sayfasını görürüz.
 blog sayfasında kayıt olur ve sonra jpg'li post yapıştırırız.
 tüm eklemeleri s3 bucket içinde de görürüz.
 sistem çalıştıysa o zaman launch template oluştururuz.
 
-kullanılacak userdata yandaki dosyada!!!!!!
+kullanılacak userdata aşağıdaki dosyada!!!!!!
 instance'a bağlanırız ve userdatayı girmeden önce hemen yetkiyi almak için sudo su ile başlarız, sonra user data'daki komutları tek tek gireriz.
+
+#UBUNTU 24.04'E GÖRE
+sudo su 
+#!/bin/bash
+apt-get update -y
+apt-get upgrade -y
+apt-get install git -y
+apt-get install -y python3 python3-pip python3-venv python3-dev
+python3 -m venv /opt/appenv
+source /opt/appenv/bin/activate
+pip install --upgrade pip
+pip3 install boto3
+apt install awscli -y
+cd /home/ubuntu/
+TOKEN=$(aws --region=us-east-1 ssm get-parameter --name /aydin/capstone/token --with-decryption --query 'Parameter.Value' --output text)
+#git clone https://$TOKEN@<YOUR PRIVATE REPO URL>
+git clone https://$TOKEN@github.com/AydinTokuslu/aws-capstone-2026.git
+#cd /home/ubuntu/<YOUR PRIVATE REPO NAME>
+cd /home/ubuntu/aws-capstone-2026
+apt-get install -y python3 python3-pip python3-venv python3-dev default-libmysqlclient-dev build-essential pkg-config
+pip install -r requirements.txt
+cd /home/ubuntu/aws-capstone-2026/src
+python3 -m venv /opt/capstone-venv
+source /opt/capstone-venv/bin/activate
+pip install crispy-bootstrap4
+pip install --upgrade pip setuptools wheel
+python manage.py collectstatic --noinput
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver 0.0.0.0:80
+
 -->
 
 
@@ -361,26 +398,30 @@ sudo su #terminalde yazarız.
 apt-get update -y
 apt-get upgrade -y
 apt-get install git -y
-apt-get install python3 -y
-apt install python3-pip -y
+apt-get install -y python3 python3-pip python3-venv python3-dev
+python3 -m venv /opt/appenv
+source /opt/appenv/bin/activate
+pip install --upgrade pip
 pip3 install boto3
 apt install awscli -y
 cd /home/ubuntu/
-#TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 TOKEN=$(aws --region=us-east-1 ssm get-parameter --name /aydin/capstone/token --with-decryption --query 'Parameter.Value' --output text)
 #git clone https://$TOKEN@<YOUR PRIVATE REPO URL>
-git clone https://$TOKEN@github.com/AydinTokuslu/aws-capstone.git
+git clone https://$TOKEN@github.com/AydinTokuslu/aws-capstone-2026.git
 #cd /home/ubuntu/<YOUR PRIVATE REPO NAME>
-cd /home/ubuntu/aws-capstone
-apt-get install python3.10-dev default-libmysqlclient-dev -y
-#apt-get install default-libmysqlclient-dev -y
-pip3 install -r requirements.txt
-cd /home/ubuntu/aws-capstone/src
-#cd /home/ubuntu/<YOUR PRIVATE REPO NAME>/src
-python3 manage.py collectstatic --noinput
-python3 manage.py makemigrations
-python3 manage.py migrate
-python3 manage.py runserver 0.0.0.0:80
+cd /home/ubuntu/aws-capstone-2026
+apt-get install -y python3 python3-pip python3-venv python3-dev default-libmysqlclient-dev build-essential pkg-config
+pip install -r requirements.txt
+cd /home/ubuntu/aws-capstone-2026/src
+python3 -m venv /opt/capstone-venv
+source /opt/capstone-venv/bin/activate
+pip install crispy-bootstrap4
+pip install --upgrade pip setuptools wheel
+python manage.py collectstatic --noinput
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver 0.0.0.0:80
+
 ```
 
 - create launch template
