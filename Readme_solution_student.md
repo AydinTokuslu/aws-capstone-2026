@@ -258,10 +258,10 @@ Review and select our own pem key
 
 sistemde nat-instance çıkmıyor, aws sıcak bakmıyor.onun yerine cli ile nat-instance oluşturucaz.
 
-!!!!!!!security-group-ids ile subnet-id değişecek!!!!!! 
+!!!!!!!security-group-ids (nat-instance sec grp) ile subnet-id (public subnet1a) değişecek!!!!!! 
 
 örnek cli komutu:
-aws ec2 run-instances --image-id ami-0aa210fd2121a98b7 --instance-type t2.micro --key-name mykey --security-group-ids sg-0d77d6e944440f630 --subnet-id subnet-081c62735308366fe
+aws ec2 run-instances --image-id ami-0aa210fd2121a98b7 --instance-type t2.micro --key-name mykey --security-group-ids sg-08a0fe062ee30030c --subnet-id subnet-0295197f97b047a15
 
 
 sonra üzerinde değişiklik yapıcaz.
