@@ -392,9 +392,9 @@ Advance Details:
     - IAM instance profile          : aws_capstone_EC2_S3_Full_Access
     - Termination protection        : Enable
     - User Data
-#!/bin/bash
 
-sudo su #terminalde yazarız.
+
+#!/bin/bash
 apt-get update -y
 apt-get upgrade -y
 apt-get install git -y
@@ -418,8 +418,8 @@ source /opt/capstone-venv/bin/activate
 pip install crispy-bootstrap4
 pip install --upgrade pip setuptools wheel
 python manage.py collectstatic --noinput
-python manage.py makemigrations
-python manage.py migrate
+#python manage.py makemigrations (test2'de migrate yaptığı için tekrar migrate etmesin diye çalıştırmıyoruz.)
+#python manage.py migrate
 python manage.py runserver 0.0.0.0:80
 
 ```
@@ -427,7 +427,7 @@ python manage.py runserver 0.0.0.0:80
 - create launch template
 
 ## Step 11: Create certification for secure connection
-Go to the certification manager console and click `request a certificate` button. Select `Request a public certificate`, then `request a certificate` ---> `*.<YOUR DNS NAME>` ---> DNS validation ---> No tag ---> Review ---> click confirm and request button. Then it takes a while to be activated.
+Go to the certification manager console and click `request a certificate` button. Select `Request a public certificate`, then `request a certificate` ---> `*.<YOUR DNS NAME>` ---> `<YOUR DNS NAME>` ---> DNS validation ---> No tag ---> Review ---> click confirm and request button. Then it takes a while to be activated.
 
 ## Step 12: Create ALB and Target Group
 
