@@ -108,7 +108,7 @@ DATABASES = {
         'USER': db_username, # database master username in RDS is written here
         #'PASSWORD': config('PASSWORD'),
         'PASSWORD': db_password,
-        'HOST': 'aws-capstone-rds.chaew8ekeb35.us-east-1.rds.amazonaws.com',  # database endpoint is written here
+        'HOST': 'aws-capstone-rds.c8riu6mki22t.us-east-1.rds.amazonaws.com',  # database endpoint is written here
         'PORT': '3306' # database port is written here
     }
 }

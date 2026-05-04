@@ -152,7 +152,7 @@ create bucket
 - Click Create Bucket
 
 ```text
-Bucket Name : capstone.clarusway.us
+Bucket Name : capstone.clarusway.us (capstone.devopsaydintokuslu.online)
 Region      : N.Virginia
 Object Ownership
     - ACLs enabled
@@ -163,7 +163,7 @@ Please keep other settings as are
 
 ```
 <!--
-Bucket Name : capstone.clarusway.us (capstone.devopsaydintokuslu.de)'ı public açarız, hosting'i açıp, policy yapıştırırırz.
+Bucket Name : capstone.clarusway.us (capstone.devopsaydintokuslu.online)'ı public açarız, hosting'i açıp, policy yapıştırırırz.
 içine index.html ve sorry.jpg'yi de ekleriz ki siteye ulaşılamadığında sorry uyarısı çıksın.
 -->
 
