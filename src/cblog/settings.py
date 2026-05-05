@@ -206,7 +206,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #DEFAULT_FILE_STORAGE = 'cblog.storages.MediaStore'
 
+
+ALLOWED_HOSTS = [
+    "capstone2.devopsaydintokuslu.de",
+]
+
 CSRF_TRUSTED_ORIGINS = [
-    "https://awscapstonealb-1092751768.us-east-1.elb.amazonaws.com",
-    "https://*.cloudfront.net",
+    "https://capstone2.devopsaydintokuslu.de",
 ]

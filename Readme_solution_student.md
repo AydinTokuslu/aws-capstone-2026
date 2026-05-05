@@ -193,7 +193,7 @@ save changes
 Please
 
 ```bash
-#!/bin/bash
+#!/bin/bash------BU UBUNTU 22.04 İÇİN, BİİZMKİ UBUNTU 24.04
 apt-get update -y
 apt-get upgrade -y
 apt-get install git -y
@@ -324,7 +324,7 @@ private ile boş yere vakit kaybedip nat-instance ile bağlanmamak için, direkt
 userdatayı test etmek için yapıyoruz bu testi, eğer public subnette çalışıyorsa private subnette de çalışır: 
 deneme bir ubuntu instance ayağa kaldırırız, capstone vpc ve 1a public subnet seçilir. buna role s3-ssm rolü atanır ve userdata eklenmeden ayağa kaldırılır.
 bu instance'a direkt connect ile bağlanırız.
-instance'a bağlanınca sudo su yazıp userdata'nın diğer komutları (397-423) sırayla çalıştırırız.
+instance'a bağlanınca sudo su yazıp userdata'nın diğer komutları (372-418) sırayla çalıştırırız.
 sonra hepsi bitince public ip'yi konsolda çalıştırır ve blog sayfasını görürüz.
 blog sayfasında kayıt olur ve sonra jpg'li post yapıştırırız.
 tüm eklemeleri s3 bucket içinde de görürüz.
@@ -333,35 +333,7 @@ sistem çalıştıysa o zaman launch template oluştururuz.
 kullanılacak userdata aşağıdaki dosyada!!!!!!
 instance'a bağlanırız ve userdatayı girmeden önce hemen yetkiyi almak için sudo su ile başlarız, sonra user data'daki komutları tek tek gireriz.
 
-#UBUNTU 24.04'E GÖRE
-sudo su 
-#!/bin/bash
-apt-get update -y
-apt-get upgrade -y
-apt-get install git -y
-apt-get install -y python3 python3-pip python3-venv python3-dev
-python3 -m venv /opt/appenv
-source /opt/appenv/bin/activate
-pip install --upgrade pip
-pip3 install boto3
-apt install awscli -y
-cd /home/ubuntu/
-TOKEN=$(aws --region=us-east-1 ssm get-parameter --name /aydin/capstone/token --with-decryption --query 'Parameter.Value' --output text)
-#git clone https://$TOKEN@<YOUR PRIVATE REPO URL>
-git clone https://$TOKEN@github.com/AydinTokuslu/aws-capstone-2026.git
-#cd /home/ubuntu/<YOUR PRIVATE REPO NAME>
-cd /home/ubuntu/aws-capstone-2026
-apt-get install -y python3 python3-pip python3-venv python3-dev default-libmysqlclient-dev build-essential pkg-config
-pip install -r requirements.txt
-cd /home/ubuntu/aws-capstone-2026/src
-python3 -m venv /opt/capstone-venv
-source /opt/capstone-venv/bin/activate
-pip install crispy-bootstrap4
-pip install --upgrade pip setuptools wheel
-python manage.py collectstatic --noinput
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver 0.0.0.0:80
+sudo su
 
 -->
 
@@ -646,7 +618,7 @@ Other stuff                             : Keep them as are
 
 ```text
 Price Class                             : Use all edge locations (best performance)
-Alternate Domain Names                  : capstone.clarusway.us
+Alternate Domain Names                  : www.devopsaydintokuslu.online
 SSL Certificate                         : Custom SSL Certificate (example.com) ---> Select your certificate creared before
 Other stuff                             : Keep them as are
 ```
