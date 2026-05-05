@@ -699,7 +699,7 @@ Before we create our Lambda function, we should create IAM role that we'll use f
 ```text
 Select Lambda as trusted entity ---> click Next:Permission
 Choose: - AmazonS3fullaccess,
-        - Network Administrator
+        - Network Administrator (lambdabasicexecution)
         - DynamoDBFullAccess
 No tags
 Role Name           : aws_capstone_lambda_Role
@@ -782,7 +782,7 @@ sonra "General configuration" bölümünden "timeout" 30 saniye olarak düzenlen
 yeterli değil, ayağa kalkması için çok kısa süre.
 -->
 
-
+yeni bir dosya yükleriz ana sayfada, tetiklenip tetiklenmediğini görürüz. bunun için dynamodb-explore items'a yüklediğimiz dosya gelmişse, lambda tetikleme çalışmıştır.
 
 - Click deploy and all set. go to the website and add a new post with photo, then control if their record is written on DynamoDB (icine tiklayinca Explore Tables bölümüne tiklayinca eklenen dosyayi goruruz).
 
