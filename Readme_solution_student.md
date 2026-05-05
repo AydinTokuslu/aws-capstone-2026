@@ -398,32 +398,52 @@ Advance Details:
 
 
 #!/bin/bash
+set -euxo pipefail
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get update -y
-apt-get upgrade -y
-apt-get install git -y
-apt-get install -y python3 python3-pip python3-venv python3-dev
-python3 -m venv /opt/appenv
-source /opt/appenv/bin/activate
-pip install --upgrade pip
-pip3 install boto3
-apt install awscli -y
-cd /home/ubuntu/
-TOKEN=$(aws --region=us-east-1 ssm get-parameter --name /aydin/capstone/token --with-decryption --query 'Parameter.Value' --output text)
-#git clone https://$TOKEN@<YOUR PRIVATE REPO URL>
-git clone https://$TOKEN@github.com/AydinTokuslu/aws-capstone-2026.git
-#cd /home/ubuntu/<YOUR PRIVATE REPO NAME>
-cd /home/ubuntu/aws-capstone-2026
-apt-get install -y python3 python3-pip python3-venv python3-dev default-libmysqlclient-dev build-essential pkg-config
-pip install -r requirements.txt
-cd /home/ubuntu/aws-capstone-2026/src
+apt-get install -y \
+  git \
+  awscli \
+  python3 \
+  python3-pip \
+  python3-venv \
+  python3-full \
+  python3-dev \
+  default-libmysqlclient-dev \
+  build-essential \
+  pkg-config
+
+cd /home/ubuntu
+
+TOKEN=$(aws --region us-east-1 ssm get-parameter \
+  --name /aydin/capstone/token \
+  --with-decryption \
+  --query 'Parameter.Value' \
+  --output text)
+
+git clone https://${TOKEN}@github.com/AydinTokuslu/aws-capstone-2026.git
+
+chown -R ubuntu:ubuntu /home/ubuntu/aws-capstone-2026
+
+rm -rf /opt/capstone-venv
 python3 -m venv /opt/capstone-venv
-source /opt/capstone-venv/bin/activate
-pip install crispy-bootstrap4
-pip install --upgrade pip setuptools wheel
-python manage.py collectstatic --noinput
-#python manage.py makemigrations (test2'de migrate yaptığı için tekrar migrate etmesin diye çalıştırmıyoruz.)
-#python manage.py migrate
-python manage.py runserver 0.0.0.0:80
+
+/opt/capstone-venv/bin/python -m ensurepip --upgrade
+/opt/capstone-venv/bin/python -m pip install --upgrade pip setuptools wheel
+/opt/capstone-venv/bin/python -m pip install -r /home/ubuntu/aws-capstone-2026/requirements.txt
+/opt/capstone-venv/bin/python -m pip install python-decouple crispy-bootstrap4
+
+cd /home/ubuntu/aws-capstone-2026/src
+
+/opt/capstone-venv/bin/python manage.py check
+/opt/capstone-venv/bin/python manage.py collectstatic --noinput
+
+# ASG içindeki her instance migration çalıştırmasın diye kapalı.
+# İlk kurulumda sadece bir kere manuel çalıştır:
+# /opt/capstone-venv/bin/python manage.py migrate
+
+/opt/capstone-venv/bin/python manage.py runserver 0.0.0.0:80
 
 ```
 
