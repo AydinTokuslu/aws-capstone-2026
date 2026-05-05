@@ -46,6 +46,9 @@ The Clarusway Blog Page Application aims to deploy blog application as a web app
     - Policy        : `Full Access`
     - Create
 
+    ## private route table'a nat-instance (0.0.0.0/0) ekleriz ki, nat-instance'a bağlanıp internete çıkabilelim
+
+
 ### Step 2: Create Security Groups (ALB ---> EC2 ---> RDS)
 
 1. ALB Security Group
